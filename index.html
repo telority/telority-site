@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telority — Strategy Into Execution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #0a0e1a;
+    --navy-mid:   #141929;
+    --navy-light: #1e2538;
+    --navy-rule:  rgba(240,237,230,0.1);
+    --cream:      #f0ede6;
+    --cream-mid:  #c8c4bc;
+    --cream-muted:#8a95aa;
+    --gold:       #c9a84c;
+    --gold-light: #e2c47a;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono:  'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--serif);
+    background: var(--navy);
+    color: var(--cream);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 3.5rem;
+    background: var(--navy);
+    border-bottom: 0.5px solid var(--navy-rule);
+  }
+
+  section { scroll-margin-top: 80px; }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 3.5rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 6vw, 6rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-rule {
+    width: 56px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    max-width: 580px;
+    line-height: 1.85;
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .hero-cta:hover { color: var(--gold-light); border-color: var(--gold-light); }
+  .hero-cta .arrow { transition: transform 0.2s; }
+  .hero-cta:hover .arrow { transform: translateX(4px); }
+
+  /* SECTION SHARED */
+  section {
+    border-top: 0.5px solid var(--navy-rule);
+    padding: 6rem 3.5rem;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3.5rem;
+  }
+
+  /* PROOF STRIP */
+  .proof {
+    background: var(--navy-mid);
+    border-top: 0.5px solid var(--navy-rule);
+    border-bottom: 0.5px solid var(--navy-rule);
+    padding: 3rem 3.5rem;
+  }
+
+  .proof-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .proof-number {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .proof-number em { font-style: italic; }
+
+  .proof-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-headline {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+  }
+
+  .about-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .about-body p {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    line-height: 1.9;
+  }
+
+  .about-body p + p { margin-top: 1.4rem; }
+
+  .about-body strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  /* PRINCIPLES */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .principle {
+    padding: 2.5rem 2.5rem 2.5rem 0;
+    border-right: 0.5px solid var(--navy-rule);
+    padding-right: 2.5rem;
+  }
+
+  .principle:first-child { padding-left: 0; }
+  .principle:last-child { border-right: none; padding-right: 0; padding-left: 2.5rem; }
+  .principle:nth-child(2) { padding-left: 2.5rem; }
+
+  .principle-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .principle-title {
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .principle-body {
+    font-size: 1.15rem;
+    color: var(--cream-mid);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  /* CAPABILITIES */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .cap-card {
+    background: var(--navy-mid);
+    border: 0.5px solid var(--navy-rule);
+    padding: 2.5rem 2rem;
+  }
+
+  .cap-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .cap-title {
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .cap-body {
+    font-size: 1.15rem;
+    color: var(--cream-mid);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  /* PRODUCTS */
+  .product-block {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+    align-items: start;
+    padding: 3.5rem 0;
+    border-top: 0.5px solid var(--navy-rule);
+  }
+
+  .product-block:first-of-type { border-top: none; padding-top: 0; }
+
+  .product-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .product-headline {
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .product-body {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    line-height: 1.9;
+    margin-bottom: 1.75rem;
+  }
+
+  .product-attrs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .product-attrs li {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    letter-spacing: 0.01em;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .product-attrs li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  .product-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .product-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  /* FOUNDERS */
+  .founders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .founder-card {
+    background: var(--navy-mid);
+    border: 0.5px solid var(--navy-rule);
+    padding: 2.5rem;
+  }
+
+  .founder-initial {
+    width: 48px;
+    height: 48px;
+    border: 0.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .founder-name {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .founder-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .founder-bio {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    line-height: 1.85;
+  }
+
+  /* CONTACT */
+  .contact-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .contact-headline {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+  }
+
+  .contact-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .contact-body {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--cream-mid);
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .contact-email {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--gold);
+    padding: 2.5rem 3.5rem;
+    background: var(--navy-mid);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--cream-muted);
+  }
+
+  .footer-tagline {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-mid);
+  }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 300;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--cream);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0; bottom: 0;
+    background: var(--navy);
+    z-index: 150;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 3rem;
+    gap: 0;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    padding: 0.6rem 0;
+    border-bottom: 0.5px solid var(--navy-rule);
+    width: 100%;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:first-child { border-top: 0.5px solid var(--navy-rule); }
+  .mobile-menu a:hover { color: var(--gold-light); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero h1 { white-space: normal; }
+    .about-grid, .principles-grid, .capabilities-grid,
+    .founders-grid, .contact-block { grid-template-columns: 1fr; gap: 2rem; }
+    .product-block { grid-template-columns: 1fr; gap: 1.5rem; }
+    .principle { padding: 1.5rem 0; border-right: none; border-top: 0.5px solid var(--navy-rule); }
+    .principle:first-child { border-top: none; }
+    footer { padding: 1.5rem; }
+    .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Telority</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#products">Our Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="closeMenu()">Home</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#capabilities" onclick="closeMenu()">Capabilities</a>
+  <a href="#products" onclick="closeMenu()">Our Work</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow fade-up">Strategy Into Execution</p>
+  <h1 class="fade-up delay-1">Complex technology.<br><em>Real results.</em></h1>
+  <div class="hero-rule fade-up delay-2"></div>
+  <p class="hero-sub fade-up delay-2">
+    Telority helps mid-market enterprises turn technology investments into outcomes that hold up under governance, leadership scrutiny, and operational reality. We build systems people actually use — with accountability designed in from day one.
+  </p>
+  <a href="#about" class="hero-cta fade-up delay-3">
+    How we work <span class="arrow">→</span>
+  </a>
+</div>
+
+<!-- POSITIONING STRIP -->
+<div style="background: var(--navy-mid); border-top: 0.5px solid var(--navy-rule); border-bottom: 0.5px solid var(--navy-rule); padding: 2.5rem 3.5rem;">
+  <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
+    <p style="font-family: var(--serif); font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 300; font-style: italic; color: var(--cream-mid); letter-spacing: 0.01em;">Built by practitioners. Delivered to board standard.</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">About Telority</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-headline">Most firms deliver reports.<br><em>We deliver working systems.</em></h2>
+      </div>
+      <div class="about-body">
+        <p>
+          Telority is a technology transformation execution firm built for mid-market enterprises — PE-backed or owner-operated companies under pressure to modernize, rationalize, and govern their technology investments.
+        </p>
+        <p>
+          The gap most organizations face is not finding the right technology. It is turning that investment into results that hold up under governance, audit, and board scrutiny. <strong>We close that gap.</strong>
+        </p>
+        <p>
+          We bring deep experience in application portfolio management, enterprise platform modernization, AI-enabled workflows, and the governance frameworks that make complex technology trusted and adopted at every level of the organization.
+        </p>
+        <p>
+          Our work is built on three commitments: we execute, not just advise. We build governance in from the start, not after the fact. And we design for adoption — because a system no one uses is not a result.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="section-inner">
+    <p class="section-label">How We Work</p>
+    <div class="principles-grid">
+      <div class="principle">
+        <span class="principle-number">01</span>
+        <h3 class="principle-title">We execute, not just advise</h3>
+        <p class="principle-body">
+          Telority delivers working systems, not recommendations that age on a shelf. Every engagement ends with something operational — adopted, governed, and trusted by the people who depend on it.
+        </p>
+      </div>
+      <div class="principle">
+        <span class="principle-number">02</span>
+        <h3 class="principle-title">Governance is never an afterthought</h3>
+        <p class="principle-body">
+          Accountability structures, audit trails, and oversight design are built into the architecture from day one. When leadership or a board asks how a decision was made, the answer is already documented.
+        </p>
+      </div>
+      <div class="principle">
+        <span class="principle-number">03</span>
+        <h3 class="principle-title">Adoption is a design problem</h3>
+        <p class="principle-body">
+          Tools that people work around are design failures. We build workflows that integrate into how decisions are actually made — so adoption happens because the system is better, not because it was mandated.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="section-inner">
+    <p class="section-label">Capabilities</p>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <span class="cap-number">01</span>
+        <h3 class="cap-title">Technology Transformation</h3>
+        <p class="cap-body">
+          Application portfolio rationalization, modernization planning, and platform strategy. We help enterprises understand what they have, what it costs, and where to invest — with defensible recommendations and a clear execution path.
+        </p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-number">02</span>
+        <h3 class="cap-title">Governance &amp; Decision Design</h3>
+        <p class="cap-body">
+          Governance frameworks, human-in-the-loop workflow design, and accountability structures for high-stakes enterprise decisions. We build systems where every decision has a named owner and a documented rationale.
+        </p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-number">03</span>
+        <h3 class="cap-title">AI-Enabled Workflows</h3>
+        <p class="cap-body">
+          AI applied to real enterprise decision workflows — not as automation, but as decision-support that is owned, validated, and trusted. We design for the right level of human oversight at every augmentation level.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS / OUR WORK -->
+<section id="products">
+  <div class="section-inner">
+    <p class="section-label">Our Work</p>
+
+    <div class="product-block">
+      <div>
+        <p class="product-name">PortfolioIQ</p>
+        <p class="product-tag">Proprietary Tool</p>
+      </div>
+      <div>
+        <h3 class="product-headline">AI-powered application portfolio rationalization — Big 4 findings in 48 hours.</h3>
+        <p class="product-body">
+          PortfolioIQ ingests application portfolio data from any source — ServiceNow, Freshservice, LeanIX, or a spreadsheet export — and delivers AI-scored rationalization recommendations through a governed dashboard. Every recommendation includes full reasoning, a confidence score, and a complete signal audit trail. Human reviewers retain full decision authority, with every acceptance, override, or escalation documented for governance and board reporting.
+        </p>
+        <ul class="product-attrs">
+          <li>Retain, Modernize, Retire, or Replace recommendations with full AI reasoning</li>
+          <li>Human-in-the-loop governance — AI generates, humans decide</li>
+          <li>Complete audit trail for every recommendation and decision</li>
+          <li>Fraction of the cost and time of traditional consulting analysis</li>
+        </ul>
+        <p style="font-family: var(--mono); font-size: 11px; font-weight: 300; letter-spacing: 0.12em; color: var(--gold); margin-top: 0.5rem;">Engagement-based access — contact us to arrange a demonstration.</p>
+      </div>
+    </div>
+
+    <div class="product-block">
+      <div>
+        <p class="product-name">AAACF</p>
+        <p class="product-tag">Framework</p>
+      </div>
+      <div>
+        <h3 class="product-headline">A governance framework built for AI augmentation — not deterministic technology.</h3>
+        <p class="product-body">
+          Standard change management frameworks were designed for systems that behave predictably. AI augmentation introduces a different risk: behavioral dependency — the gradual shift of human judgment toward the AI as its influence grows. The AI Adoption &amp; Augmentation Change Framework addresses this directly. Governance requirements, oversight design, and accountability structures scale with the actual degree of AI influence in enterprise decisions.
+        </p>
+        <ul class="product-attrs">
+          <li>Tiered model — governance scales with AI influence, not deployment category</li>
+          <li>Named human accountability at every decision point</li>
+          <li>Designed for high-stakes, risk-sensitive enterprise environments</li>
+          <li>Applied where standard frameworks were not built to go</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Work With Us</p>
+    <div class="contact-block">
+      <div>
+        <h2 class="contact-headline">Ready to turn your technology strategy into<br><em>a working system?</em></h2>
+      </div>
+      <div>
+        <p class="contact-body">
+          We work with a small number of mid-market organizations at a time. If you are under board pressure to rationalize technology spend, govern AI investments, or execute a transformation that previous efforts have stalled, we would like to talk.
+        </p>
+        <a href="mailto:info@telority.com" class="contact-email">info@telority.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 Telority. All rights reserved.</span>
+    <span class="footer-tagline">Strategy into execution.</span>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
